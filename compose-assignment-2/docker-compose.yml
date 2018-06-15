@@ -1,1 +1,26 @@
 # create your drupal and postgres config here, based off the last assignment
+version: '3'
+services:
+    dreamland:
+        image: custom_drupal
+        build: .
+        ports:
+          - '8080:80'
+        volumes:
+          - drupal-module=/var/www/html/modules
+          - drupal-profiles=/var/www/html/profiles
+          - drupal-sites=/var/www/html/sites
+          - drupal-themes=/var/www/html/themes
+    backend:
+        image: 'postgres:latest'
+        environment:
+            POSTGRES_PASSWORD: test123
+        volumes:
+          - drupal-data="/var/lib/postgresql/data"
+
+volumes:
+  drupal-module:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
+  drupal-data:
